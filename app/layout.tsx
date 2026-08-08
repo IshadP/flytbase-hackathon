@@ -13,9 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NestGen '26 — Autonomous Drone Operations & Physical AI Summit",
+  title: "NestGen '26 - Physical AI Summit",
   description: "The premier global conference for autonomous drone operations, dock fleets, BVLOS telemetry, and physical AI. Hosted by FlytBase on September 29, 2026.",
   keywords: ["NestGen '26", "FlytBase", "Autonomous Drones", "Drone Dock", "Physical AI", "BVLOS", "DFR"],
+  icons: {
+    icon: "/footer-cube-colored.webp",
+    shortcut: "/footer-cube-colored.webp",
+    apple: "/footer-cube-colored.webp",
+  },
   openGraph: {
     title: "NestGen '26 — Autonomous Drone Operations & Physical AI Summit",
     description: "The premier global conference for autonomous drone operations, dock fleets, BVLOS telemetry, and physical AI.",
