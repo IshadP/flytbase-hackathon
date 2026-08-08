@@ -1,26 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=Bitcount+Grid+Single:wght@100..900&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'NewPixelSquare';
+  src: url('/thatthatnewpixelfamilytest-square.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-display: 'NewPixelSquare', 'Bitcount Prop Single', monospace;
+  --font-body:    var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  --font-mono:    var(--font-geist-mono), 'Courier New', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --font-display: 'NewPixelSquare', monospace;
+  --font-body:    var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono:    var(--font-geist-mono), monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #070709;
+  color: #ffffff;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+.font-display { font-family: 'NewPixelSquare', 'Bitcount Prop Single', monospace; }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: #070709; }
+::-webkit-scrollbar-thumb { background: #1c1c24; }
+::-webkit-scrollbar-thumb:hover { background: #333344; }
+
+/* Selection */
+::selection { background: rgba(255, 255, 255, 0.25); color: #ffffff; }
+
+/* No scrollbar utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Marquee ticker */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up   { animation: fadeUp 0.75s cubic-bezier(0.16,1,0.3,1) both; }
+.fade-up-2 { animation: fadeUp 0.75s 0.14s cubic-bezier(0.16,1,0.3,1) both; }
+.fade-up-3 { animation: fadeUp 0.75s 0.28s cubic-bezier(0.16,1,0.3,1) both; }
+.fade-up-4 { animation: fadeUp 0.75s 0.42s cubic-bezier(0.16,1,0.3,1) both; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink { animation: blink 1.1s step-end infinite; }
+
+@keyframes fadeCaption {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-caption {
+  animation: fadeCaption 0.4s cubic-bezier(0.16,1,0.3,1) both;
 }

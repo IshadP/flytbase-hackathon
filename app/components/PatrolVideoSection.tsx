@@ -1,0 +1,112 @@
+'use client';
+
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+const CAPTIONS = [
+  { at: 0.0,  text: 'A fence. Miles of it. One guard.' },
+  { at: 0.2,  text: 'Why send a human where a machine sees better?' },
+  { at: 0.45, text: '24 hours. Zero fatigue. Zero risk.' },
+  { at: 0.7,  text: 'The math stopped making sense a long time ago.' },
+];
+
+export const PatrolVideoSection: React.FC = () => {
+  const sectionRef  = useRef<HTMLDivElement>(null);
+  const videoRef    = useRef<HTMLVideoElement>(null);
+  const captionRef  = useRef<HTMLParagraphElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video   = videoRef.current;
+    if (!section || !video) return;
+
+    let lastCaption = CAPTIONS[0].text;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: '+=300%',
+        pin: true,
+        scrub: 0.4,
+        onUpdate(self) {
+          const p = self.progress;
+
+          if (video.readyState >= 2 && video.duration) {
+            video.currentTime = p * video.duration;
+          }
+
+          if (progressRef.current) {
+            progressRef.current.style.transform = `scaleX(${p})`;
+          }
+
+          let current = CAPTIONS[0].text;
+          for (const c of CAPTIONS) {
+            if (p >= c.at) current = c.text;
+          }
+
+          if (captionRef.current && current !== lastCaption) {
+            lastCaption = current;
+            captionRef.current.textContent = current;
+            captionRef.current.classList.remove('fade-caption');
+            void captionRef.current.offsetWidth;
+            captionRef.current.classList.add('fade-caption');
+          }
+        },
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative h-screen bg-[#070709] overflow-hidden border-t border-white/10"
+    >
+      <video
+        ref={videoRef}
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ willChange: 'contents' }}
+      >
+        <source src="/Drone_patrolling_fence_area_202608081542.mp4" type="video/mp4" />
+      </video>
+
+      <div className="absolute inset-0 bg-[#070709]/30 pointer-events-none" />
+
+      <div className="absolute inset-0 flex items-center justify-center z-20 px-8 text-center pointer-events-none">
+        <p
+          ref={captionRef}
+          className="font-display font-bold text-white leading-[1.0] fade-caption"
+          style={{
+            fontSize: 'clamp(2.2rem, 6.5vw, 5.8rem)',
+            textShadow: '0 4px 30px rgba(0,0,0,0.8)',
+          }}
+        >
+          {CAPTIONS[0].text}
+        </p>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/10 z-20">
+        <div
+          ref={progressRef}
+          className="h-full bg-white origin-left"
+          style={{ transform: 'scaleX(0)', willChange: 'transform' }}
+        />
+      </div>
+
+      <div className="absolute top-8 right-8 z-20 font-mono text-xs tracking-[0.2em] text-white/50 uppercase">
+        Scroll
+      </div>
+    </section>
+  );
+};
