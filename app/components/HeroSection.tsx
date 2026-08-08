@@ -13,19 +13,21 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
-  const sectionRef       = useRef<HTMLElement>(null);
-  const videoRef         = useRef<HTMLVideoElement>(null);
-  const videoWrapperRef  = useRef<HTMLDivElement>(null);
-  const textContainerRef = useRef<HTMLDivElement>(null);
-  const blackOverlayRef  = useRef<HTMLDivElement>(null);
-  const targetTimeRef    = useRef<number>(0);
+  const sectionRef        = useRef<HTMLElement>(null);
+  const videoRef          = useRef<HTMLVideoElement>(null);
+  const videoWrapperRef   = useRef<HTMLDivElement>(null);
+  const textContainerRef  = useRef<HTMLDivElement>(null);
+  const blackOverlayRef   = useRef<HTMLDivElement>(null);
+  const thinkAboutThisRef = useRef<HTMLDivElement>(null);
+  const targetTimeRef     = useRef<number>(0);
 
   useEffect(() => {
-    const section      = sectionRef.current;
-    const video        = videoRef.current;
-    const videoWrapper = videoWrapperRef.current;
-    const textContainer = textContainerRef.current;
-    const blackOverlay  = blackOverlayRef.current;
+    const section       = sectionRef.current;
+    const video         = videoRef.current;
+    const videoWrapper  = videoWrapperRef.current;
+    const textContainer  = textContainerRef.current;
+    const blackOverlay   = blackOverlayRef.current;
+    const thinkText      = thinkAboutThisRef.current;
 
     if (!section || !video || !videoWrapper || !textContainer) return;
 
@@ -60,7 +62,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
           textContainer.style.opacity = textOpacity.toString();
           textContainer.style.pointerEvents = p > 0.1 ? 'none' : 'auto';
 
-          // 3. Zoom video from 1X to 2X AND fade to black during 95% -> 100% of scroll
+          // 3. "Think about this" appears bottom-center after 88% scroll progress
+          if (thinkText) {
+            if (p >= 0.88) {
+              const thinkProgress = Math.min(1, (p - 0.88) / 0.08); // 0 -> 1
+              const translateY = (1 - thinkProgress) * 40;           // 40px -> 0px
+              thinkText.style.opacity = thinkProgress.toString();
+              thinkText.style.transform = `translate(-50%, ${translateY}px)`;
+            } else {
+              thinkText.style.opacity = '0';
+              thinkText.style.transform = 'translate(-50%, 40px)';
+            }
+          }
+
+          // 4. Zoom video from 1X to 2X AND fade to black during 95% -> 100% of scroll
           if (p >= 0.95) {
             const zoomProgress = (p - 0.95) / 0.05; // 0 -> 1
             const scale = 1 + zoomProgress * 1;     // 1 -> 2
@@ -114,6 +129,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
         className="absolute inset-0 bg-[#070709] pointer-events-none z-20 transition-opacity duration-75"
         style={{ opacity: 0 }}
       />
+
+      {/* "Think about this" — appears bottom-center after 88% video progression */}
+      <div
+        ref={thinkAboutThisRef}
+        className="absolute bottom-12 left-1/2 z-30 pointer-events-none transition-all duration-75"
+        style={{ opacity: 0, transform: 'translate(-50%, 40px)' }}
+      >
+        <p className="font-display font-bold text-white text-2xl sm:text-4xl tracking-wider uppercase drop-shadow-xl text-center whitespace-nowrap">
+          Think about this
+        </p>
+      </div>
 
       {/* Hero Text Overlay — Fades out over first 20% of scroll */}
       <div
