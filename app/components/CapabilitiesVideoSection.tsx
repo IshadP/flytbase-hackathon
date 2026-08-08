@@ -9,21 +9,21 @@ if (typeof window !== 'undefined') {
 }
 
 const CAPTIONS = [
-  { at: 0.0,  text: 'Scanning for quality' },
-  { at: 0.33, text: 'Rescue and alert' },
-  { at: 0.66, text: 'Delivery and transportation' },
+  { at: 0.0, text: 'A damaged container or a machine problem? The drone spots it.' },
+  { at: 0.33, text: 'Someone lost at sea at night? It finds them.' },
+  { at: 0.66, text: 'A critical medical delivery with no roads? Deliverd on time.' },
 ];
 
 export const CapabilitiesVideoSection: React.FC = () => {
-  const sectionRef    = useRef<HTMLDivElement>(null);
-  const videoRef      = useRef<HTMLVideoElement>(null);
-  const captionRef    = useRef<HTMLParagraphElement>(null);
-  const progressRef   = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const captionRef = useRef<HTMLParagraphElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
   const targetTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const video   = videoRef.current;
+    const video = videoRef.current;
     if (!section || !video) return;
 
     let lastCaption = CAPTIONS[0].text;
@@ -100,9 +100,9 @@ export const CapabilitiesVideoSection: React.FC = () => {
       <div className="absolute inset-0 flex items-center justify-center z-20 px-8 text-center pointer-events-none">
         <p
           ref={captionRef}
-          className="font-display font-bold text-white leading-[1.0] fade-caption uppercase"
+          className="font-display font-bold text-white leading-[1.0] fade-caption uppercase max-w-5xl"
           style={{
-            fontSize: 'clamp(2.2rem, 6.5vw, 5.8rem)',
+            fontSize: 'clamp(2rem, 5.5vw, 4.8rem)',
             textShadow: '0 4px 30px rgba(0,0,0,0.8)',
           }}
         >

@@ -13,21 +13,21 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
-  const sectionRef        = useRef<HTMLElement>(null);
-  const videoRef          = useRef<HTMLVideoElement>(null);
-  const videoWrapperRef   = useRef<HTMLDivElement>(null);
-  const textContainerRef  = useRef<HTMLDivElement>(null);
-  const blackOverlayRef   = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoWrapperRef = useRef<HTMLDivElement>(null);
+  const textContainerRef = useRef<HTMLDivElement>(null);
+  const blackOverlayRef = useRef<HTMLDivElement>(null);
   const thinkAboutThisRef = useRef<HTMLDivElement>(null);
-  const targetTimeRef     = useRef<number>(0);
+  const targetTimeRef = useRef<number>(0);
 
   useEffect(() => {
-    const section       = sectionRef.current;
-    const video         = videoRef.current;
-    const videoWrapper  = videoWrapperRef.current;
-    const textContainer  = textContainerRef.current;
-    const blackOverlay   = blackOverlayRef.current;
-    const thinkText      = thinkAboutThisRef.current;
+    const section = sectionRef.current;
+    const video = videoRef.current;
+    const videoWrapper = videoWrapperRef.current;
+    const textContainer = textContainerRef.current;
+    const blackOverlay = blackOverlayRef.current;
+    const thinkText = thinkAboutThisRef.current;
 
     if (!section || !video || !videoWrapper || !textContainer) return;
 
@@ -152,7 +152,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
           <span className="rounded-full px-4 py-1.5 border border-white/20 bg-white/10 text-white/90 font-mono text-xs tracking-wider backdrop-blur-sm">
             09.29.26
           </span>
-          <span className="rounded-full px-4 py-1.5 border border-white/20 bg-white/10 text-white/90 font-mono text-xs tracking-wider backdrop-blur-sm">
+          <span className="rounded-full uppercase px-4 py-1.5 border border-white/20 bg-white/10 text-white/90 font-mono text-xs tracking-wider backdrop-blur-sm">
             Online Only
           </span>
         </div>

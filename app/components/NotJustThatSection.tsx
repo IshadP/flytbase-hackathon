@@ -11,12 +11,12 @@ export const NotJustThatSection: React.FC = () => {
       <div className="relative z-10 max-w-5xl mx-auto w-full flex flex-col items-center justify-center">
         <h2
           className="font-display font-bold text-white tracking-wider leading-[0.95] uppercase"
-          style={{ fontSize: 'clamp(3.2rem, 8.5vw, 7.5rem)' }}
+          style={{ fontSize: 'clamp(2.8rem, 7.5vw, 6.5rem)' }}
         >
-          NOT JUST THAT
+          SURVEILENCE IS ONLY THE BEGINNING.
           <br />
-          <span className="text-white/40 font-body text-2xl sm:text-4xl lg:text-5xl tracking-normal normal-case block mt-6 font-normal">
-            Physical AI can do a lot more
+          <span className="font-body text-[#a3a3a3] text-[18px] leading-[29.9px] tracking-normal normal-case block mt-6 font-normal max-w-2xl mx-auto">
+            It also finds who is lost, scans what is broken, and delivers when seconds count.
           </span>
         </h2>
       </div>

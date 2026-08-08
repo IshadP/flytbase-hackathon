@@ -29,7 +29,13 @@ body {
 }
 
 .font-display { font-family: 'NewPixelSquare', 'Bitcount Prop Single', monospace; }
-.font-body    { font-family: var(--font-body); }
+.font-body    {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 29.9px;
+  letter-spacing: 0px;
+  color: #a3a3a3;
+}
 .font-mono    { font-family: var(--font-mono); }
 
 /* Scrollbar */
