@@ -13,7 +13,7 @@ const CAPTIONS = [
   // { at: 0.25, text: 'No pilot. No call. No delay.' },
   // { at: 0.5,  text: 'It sees what humans can\'t reach.' },
   // { at: 0.75, text: 'And it\'s already on its way back.' },
-  { at: 0.0, text: 'A machine that doesn\'t wait for the call.' },
+  { at: 0.0, text: 'A drone wakes up, already moving.' },
   { at: 0.25, text: 'Faster than anyone could get there.' },
   { at: 0.5, text: 'Extending what one person could ever d0 alone.' },
   { at: 0.75, text: 'A system that makes sure urgent things get seen first.' },
