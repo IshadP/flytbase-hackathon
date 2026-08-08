@@ -16,10 +16,11 @@ const CAPTIONS = [
 ];
 
 export const PatrolVideoSection: React.FC = () => {
-  const sectionRef  = useRef<HTMLDivElement>(null);
-  const videoRef    = useRef<HTMLVideoElement>(null);
-  const captionRef  = useRef<HTMLParagraphElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+  const sectionRef    = useRef<HTMLDivElement>(null);
+  const videoRef      = useRef<HTMLVideoElement>(null);
+  const captionRef    = useRef<HTMLParagraphElement>(null);
+  const progressRef   = useRef<HTMLDivElement>(null);
+  const targetTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -28,18 +29,29 @@ export const PatrolVideoSection: React.FC = () => {
 
     let lastCaption = CAPTIONS[0].text;
 
+    // Smooth video frame lerp ticker loop
+    const onTick = () => {
+      if (video && video.readyState >= 2 && video.duration) {
+        const diff = targetTimeRef.current - video.currentTime;
+        if (Math.abs(diff) > 0.004) {
+          video.currentTime += diff * 0.2;
+        }
+      }
+    };
+    gsap.ticker.add(onTick);
+
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: section,
         start: 'top top',
         end: '+=300%',
         pin: true,
-        scrub: 0.4,
+        scrub: 0.8,
         onUpdate(self) {
           const p = self.progress;
 
-          if (video.readyState >= 2 && video.duration) {
-            video.currentTime = p * video.duration;
+          if (video.duration) {
+            targetTimeRef.current = p * video.duration;
           }
 
           if (progressRef.current) {
@@ -62,7 +74,10 @@ export const PatrolVideoSection: React.FC = () => {
       });
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      gsap.ticker.remove(onTick);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -76,7 +91,7 @@ export const PatrolVideoSection: React.FC = () => {
         playsInline
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ willChange: 'contents' }}
+        style={{ willChange: 'transform' }}
       >
         <source src="/Drone_patrolling_fence_area_202608081542.mp4" type="video/mp4" />
       </video>

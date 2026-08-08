@@ -7,6 +7,8 @@ import { ActOne } from './components/ActOne';
 import { ScrollyVideoSection } from './components/ScrollyVideoSection';
 import { PhysicalAiSection } from './components/PhysicalAiSection';
 import { PatrolVideoSection } from './components/PatrolVideoSection';
+import { NotJustThatSection } from './components/NotJustThatSection';
+import { CapabilitiesVideoSection } from './components/CapabilitiesVideoSection';
 import { LearnMoreSection } from './components/LearnMoreSection';
 import { Footer } from './components/NestGenReveal';
 
@@ -23,6 +25,8 @@ export default function Home() {
       <ScrollyVideoSection />
       <PhysicalAiSection />
       <PatrolVideoSection />
+      <NotJustThatSection />
+      <CapabilitiesVideoSection />
       <LearnMoreSection onRegister={open} />
       <Footer onRegister={open} modalOpen={modalOpen} onCloseModal={close} />
     </main>

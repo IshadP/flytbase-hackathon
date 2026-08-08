@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ onRegister, modalOpen, onCloseMo
             </div>
             <button
               onClick={onRegister}
-              className="rounded-full px-7 py-2.5 bg-[#eaeaf0] hover:bg-white text-[#070709] font-mono text-xs font-semibold tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all cursor-pointer"
+              className="rounded-full px-8 py-3 bg-[#eaeaf0] hover:bg-white text-[#070709] font-mono text-sm font-semibold tracking-wide shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
             >
               Register now
             </button>
@@ -155,7 +155,7 @@ export const Footer: React.FC<FooterProps> = ({ onRegister, modalOpen, onCloseMo
 
                   <button
                     type="submit"
-                    className="w-full mt-2 rounded-full py-3.5 bg-[#eaeaf0] hover:bg-white text-[#070709] font-mono text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer"
+                    className="w-full mt-2 rounded-full px-8 py-3 bg-[#eaeaf0] hover:bg-white text-[#070709] font-mono text-sm font-semibold tracking-wide shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer"
                   >
                     Reserve My Spot
                   </button>

@@ -107,7 +107,7 @@ export const PhysicalAiSection: React.FC = () => {
               className="font-display font-bold text-white tracking-wider leading-[1.05]"
               style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)' }}
             >
-              Any machine that senses the world and acts on it.
+              A day to discuss about any machine that senses the world and acts on it.
             </h2>
           </div>
         </div>
@@ -116,8 +116,8 @@ export const PhysicalAiSection: React.FC = () => {
       {/* Body copy + stats grid */}
       <div className="max-w-5xl mx-auto px-6 sm:px-10 py-24">
 
-        <div ref={copyRef} className="opacity-0 max-w-2xl mb-20">
-          <p className="font-body text-[#a0a0b0] text-lg leading-relaxed">
+        <div ref={copyRef} className="opacity-0 w-full mb-16">
+          <p className="font-body text-neutral-700 font-semibold text-lg sm:text-lg lg:text-lg leading-relaxed">
             The drone-in-a-box is just the start. Physical AI means any autonomous machine — on the ground, in the air, on the water — that can perceive, decide, and act without a human in the loop. The companies showing up at NestGen are already running this at scale.
           </p>
         </div>

@@ -8,7 +8,6 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Text lines that scrub in sync with video progress
 const CAPTIONS = [
   { at: 0.0,  text: 'A drone wakes up.' },
   { at: 0.25, text: 'No pilot. No call. No delay.' },
@@ -17,10 +16,11 @@ const CAPTIONS = [
 ];
 
 export const ScrollyVideoSection: React.FC = () => {
-  const sectionRef  = useRef<HTMLDivElement>(null);
-  const videoRef    = useRef<HTMLVideoElement>(null);
-  const captionRef  = useRef<HTMLParagraphElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+  const sectionRef   = useRef<HTMLDivElement>(null);
+  const videoRef     = useRef<HTMLVideoElement>(null);
+  const captionRef   = useRef<HTMLParagraphElement>(null);
+  const progressRef  = useRef<HTMLDivElement>(null);
+  const targetTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -29,27 +29,38 @@ export const ScrollyVideoSection: React.FC = () => {
 
     let lastCaptionText = CAPTIONS[0].text;
 
+    // Smooth video frame lerp ticker loop
+    const onTick = () => {
+      if (video && video.readyState >= 2 && video.duration) {
+        const diff = targetTimeRef.current - video.currentTime;
+        if (Math.abs(diff) > 0.004) {
+          video.currentTime += diff * 0.2;
+        }
+      }
+    };
+    gsap.ticker.add(onTick);
+
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: section,
         start: 'top top',
         end: '+=300%',
         pin: true,
-        scrub: 0.4,
+        scrub: 0.8,
         onUpdate(self) {
           const p = self.progress;
 
-          // Scrub video currentTime
-          if (video.readyState >= 2 && video.duration) {
-            video.currentTime = p * video.duration;
+          // Set smooth target time for ticker loop
+          if (video.duration) {
+            targetTimeRef.current = p * video.duration;
           }
 
-          // Update progress bar scale
+          // Progress bar
           if (progressRef.current) {
             progressRef.current.style.transform = `scaleX(${p})`;
           }
 
-          // Pick caption text directly without triggering React VDOM re-render
+          // Pick caption
           let current = CAPTIONS[0].text;
           for (const c of CAPTIONS) {
             if (p >= c.at) current = c.text;
@@ -58,9 +69,7 @@ export const ScrollyVideoSection: React.FC = () => {
           if (captionRef.current && current !== lastCaptionText) {
             lastCaptionText = current;
             captionRef.current.textContent = current;
-            // Trigger quick fade animation via CSS class restart
             captionRef.current.classList.remove('fade-caption');
-            // Force reflow
             void captionRef.current.offsetWidth;
             captionRef.current.classList.add('fade-caption');
           }
@@ -68,7 +77,10 @@ export const ScrollyVideoSection: React.FC = () => {
       });
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      gsap.ticker.remove(onTick);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -76,22 +88,19 @@ export const ScrollyVideoSection: React.FC = () => {
       ref={sectionRef}
       className="relative h-screen bg-[#111111] overflow-hidden border-t border-white/10"
     >
-      {/* Full-bleed video */}
       <video
         ref={videoRef}
         muted
         playsInline
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ willChange: 'contents' }}
+        style={{ willChange: 'transform' }}
       >
         <source src="/Drones_moving_off_screen_202608081441.mp4" type="video/mp4" />
       </video>
 
-      {/* Light vignette overlay */}
       <div className="absolute inset-0 bg-[#070709]/30 pointer-events-none" />
 
-      {/* Caption — centered text */}
       <div className="absolute inset-0 flex items-center justify-center z-20 px-8 text-center pointer-events-none">
         <p
           ref={captionRef}
@@ -105,7 +114,6 @@ export const ScrollyVideoSection: React.FC = () => {
         </p>
       </div>
 
-      {/* Progress bar — thin white line at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/10 z-20">
         <div
           ref={progressRef}
@@ -114,7 +122,6 @@ export const ScrollyVideoSection: React.FC = () => {
         />
       </div>
 
-      {/* Scroll hint */}
       <div className="absolute top-8 right-8 z-20 font-mono text-xs tracking-[0.2em] text-white/50 uppercase">
         Scroll
       </div>

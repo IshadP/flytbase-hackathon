@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRegister }) => {
           {/* Right CTA Pill Button */}
           <button
             onClick={onRegister}
-            className="rounded-full px-5 py-1.5 bg-[#eaeaf0] hover:bg-white text-[#070709] font-mono text-xs font-semibold shadow-[0_0_12px_rgba(255,255,255,0.15)] transition-all cursor-pointer"
+            className="rounded-full px-8 py-3 bg-[#eaeaf0] hover:bg-white text-[#070709] font-mono text-sm font-semibold tracking-wide shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
           >
             Register now
           </button>

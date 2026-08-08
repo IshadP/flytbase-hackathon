@@ -41,7 +41,7 @@ export const LearnMoreSection: React.FC<LearnMoreSectionProps> = ({ onRegister }
 
         <button
           onClick={onRegister}
-          className="rounded-full px-10 py-3.5 bg-[#eaeaf0] hover:bg-white text-[#070709] font-mono text-sm font-semibold tracking-wide shadow-[0_0_25px_rgba(255,255,255,0.15)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
+          className="rounded-full px-8 py-3 bg-[#eaeaf0] hover:bg-white text-[#070709] font-mono text-sm font-semibold tracking-wide shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
         >
           Register now
         </button>

@@ -18,6 +18,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
   const videoWrapperRef  = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
   const blackOverlayRef  = useRef<HTMLDivElement>(null);
+  const targetTimeRef    = useRef<number>(0);
 
   useEffect(() => {
     const section      = sectionRef.current;
@@ -28,19 +29,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
 
     if (!section || !video || !videoWrapper || !textContainer) return;
 
+    // Smooth video frame lerp ticker loop
+    const onTick = () => {
+      if (video && video.readyState >= 2 && video.duration) {
+        const diff = targetTimeRef.current - video.currentTime;
+        if (Math.abs(diff) > 0.004) {
+          video.currentTime += diff * 0.2;
+        }
+      }
+    };
+    gsap.ticker.add(onTick);
+
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: section,
         start: 'top top',
         end: '+=300%',
         pin: true,
-        scrub: 0.4,
+        scrub: 0.8,
         onUpdate(self) {
           const p = self.progress;
 
-          // 1. Scrub video playback
-          if (video.readyState >= 2 && video.duration) {
-            video.currentTime = p * video.duration;
+          // 1. Smooth target time for ticker loop
+          if (video.duration) {
+            targetTimeRef.current = p * video.duration;
           }
 
           // 2. Text fade out over first 20% of scroll (0.0 -> 0.2)
@@ -66,7 +78,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
       });
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      gsap.ticker.remove(onTick);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -118,17 +133,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
 
         {/* Centered Pixel Headline */}
         <h1
-          className="fade-up-2 font-display font-bold text-white tracking-wider leading-[1.05] text-center max-w-5xl drop-shadow-lg"
+          className="fade-up-2 font-display font-bold text-white tracking-wider uppercase leading-[1.05] text-center max-w-9xl drop-shadow-lg"
           style={{ fontSize: 'clamp(2.4rem, 6.5vw, 5.8rem)' }}
         >
-          Humans can't be everywhere.<br />
-          So let's see who can.
+          A summit about things that
+          reach where humans can't.
         </h1>
-
-        {/* Subheadline Tagline */}
-        <p className="fade-up-3 font-body text-white/70 text-base sm:text-lg mt-5 max-w-lg text-center drop-shadow-md">
-          A summit about things that reach where humans can't.
-        </p>
 
         {/* Centered Pill Button CTA */}
         <div className="fade-up-3 mt-10 sm:mt-12 flex justify-center">
