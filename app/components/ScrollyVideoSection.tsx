@@ -9,22 +9,26 @@ if (typeof window !== 'undefined') {
 }
 
 const CAPTIONS = [
-  { at: 0.0,  text: 'A drone wakes up.' },
-  { at: 0.25, text: 'No pilot. No call. No delay.' },
-  { at: 0.5,  text: 'It sees what humans can\'t reach.' },
-  { at: 0.75, text: 'And it\'s already on its way back.' },
+  // { at: 0.0,  text: 'A drone wakes up.' },
+  // { at: 0.25, text: 'No pilot. No call. No delay.' },
+  // { at: 0.5,  text: 'It sees what humans can\'t reach.' },
+  // { at: 0.75, text: 'And it\'s already on its way back.' },
+  { at: 0.0, text: 'A machine that doesn\'t wait for the call.' },
+  { at: 0.25, text: 'Faster than anyone could get there.' },
+  { at: 0.5, text: 'Extending what one person could ever d0 alone.' },
+  { at: 0.75, text: 'A system that makes sure urgent things get seen first.' },
 ];
 
 export const ScrollyVideoSection: React.FC = () => {
-  const sectionRef   = useRef<HTMLDivElement>(null);
-  const videoRef     = useRef<HTMLVideoElement>(null);
-  const captionRef   = useRef<HTMLParagraphElement>(null);
-  const progressRef  = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const captionRef = useRef<HTMLParagraphElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
   const targetTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const video   = videoRef.current;
+    const video = videoRef.current;
     if (!section || !video) return;
 
     let lastCaptionText = CAPTIONS[0].text;
